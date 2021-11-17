@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Built-By: Chiranjeevi_Chanda
+Build-Jdk: 16.0.2
+Implementation-Title: spring-boot-rest-example
+Implementation-Version: 0.5.0
+Implementation-Vendor-Id: com.amex
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-re
+ st-example/
+Main-Class: com.amex.example.Application
+Created-By: Maven Integration for Eclipse
+
