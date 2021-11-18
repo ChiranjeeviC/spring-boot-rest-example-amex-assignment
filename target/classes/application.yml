@@ -35,7 +35,7 @@ info:
     description: ${project.description}
     version: ${project.version}
 
-storeItem.service:
+store.service:
   name: 'default profile:'
 ---
 spring:
@@ -47,7 +47,7 @@ spring:
 spring.jpa:
     hibernate.ddl-auto: create-drop
 
-storeItem.service:
+store.service:
   name: 'test profile:'
   
 logging:

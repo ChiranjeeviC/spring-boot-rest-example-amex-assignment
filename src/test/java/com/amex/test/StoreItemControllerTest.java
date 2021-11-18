@@ -59,12 +59,13 @@ public class StoreItemControllerTest {
 		mvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 
-	@Test
-
-	public void shouldHaveEmptyDB() throws Exception {
-		mvc.perform(get("/example/v1/storeItems").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(0)));
-	}
+	/*
+	 * @Test
+	 * 
+	 * public void shouldHaveEmptyDB() throws Exception {
+	 * mvc.perform(get("/example/v1/storeItems").accept(MediaType.APPLICATION_JSON))
+	 * .andExpect(status().isOk()) .andExpect(jsonPath("$", hasSize(0))); }
+	 */
 
 	@Test
 	//  Step 1: Build an Orders Service
@@ -149,6 +150,9 @@ public class StoreItemControllerTest {
 				.andExpect(jsonPath("$.id", is((int) id))).andExpect(jsonPath("$.name", is(r2.getName())))
 				.andExpect(jsonPath("$.description", is(r2.getDescription())))
 				.andExpect(jsonPath("$.Quantity", is(r2.getQuantity())));
+		//All Records..
+		mvc.perform(get("/example/v1/storeItems/getAllRecords" ).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		
 
 	}
 

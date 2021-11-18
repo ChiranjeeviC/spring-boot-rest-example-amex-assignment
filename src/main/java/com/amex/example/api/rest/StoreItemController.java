@@ -114,13 +114,13 @@ public class StoreItemController extends AbstractRestHandler {
 	}
 	
 	// Get All records..Through pages
-		@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+		@RequestMapping(value = "/getAllRecords", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 		@ResponseStatus(HttpStatus.OK)
 		@ApiOperation(value = "get all items stored in DB with pagination", notes = "You can provide a page number (default 0) and a page size (default 100)")
 		public
 		@ResponseBody Page<StoreItem> getAllStoreItems(@ApiParam(value = "The page number (zero-based)", required = true)
-		@RequestParam(value = "page", required = true, defaultValue = DEFAULT_PAGE_NUM) Integer page,
-				@RequestParam(value = "size", required = true, defaultValue = DEFAULT_PAGE_SIZE) Integer size,
+		@RequestParam(value = "page",  defaultValue = DEFAULT_PAGE_NUM) Integer page,
+				@RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) Integer size,
 				HttpServletRequest request, HttpServletResponse response) {
 			return this.storeItemService.getAllStoredItems(page, size);
 		}
