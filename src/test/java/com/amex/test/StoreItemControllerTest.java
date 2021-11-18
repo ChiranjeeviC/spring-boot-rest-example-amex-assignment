@@ -67,7 +67,7 @@ public class StoreItemControllerTest {
 	}
 
 	@Test
-	// Summary-Step-1
+	//  Step 1: Build an Orders Service
 	public void getSummaryOfOrderDetails() throws Exception {
 		// StoreItem obj1 = mockItem("Apples");
 		StoreItem obj1 = mockItem("Oranges");
@@ -91,7 +91,7 @@ public class StoreItemControllerTest {
 
 	}
 
-	// Step-2 OfferDetails-Apples
+	// Step 2: Simple offer
 	@Test
 
 	public void getOfferDetails0() throws Exception {
@@ -128,7 +128,7 @@ public class StoreItemControllerTest {
 				.andExpect((jsonPath("$.offerItems", is((String.valueOf(checkOutOffer))))));
 	}
 
-//Step#3 get From DB
+//Step 3: Store and retrieve orders 
 
 	@Test
 	public void create() throws Exception {
