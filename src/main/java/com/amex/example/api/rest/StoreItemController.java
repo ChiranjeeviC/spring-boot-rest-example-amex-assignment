@@ -36,6 +36,7 @@ public class StoreItemController extends AbstractRestHandler {
 	@Autowired
 	private StoreItemService storeItemService;
 
+//Step 1: Build an Orders Service
 	@RequestMapping(value = "", method = RequestMethod.POST, consumes = { "application/json",
 			"application/xml" }, produces = { "application/json", "application/xml" })
 	@ResponseStatus(HttpStatus.OK)
@@ -46,12 +47,11 @@ public class StoreItemController extends AbstractRestHandler {
 		HashMap<String, String> summaryDetails = new HashMap<String, String>();
 		double price = 0.0;
 		if (storeItem.getName().equals("Apples")) {
-			price = (storeItem.getQuantity() * 0.6);
+			price = (storeItem.getQuantity() * 0.6);// Each item caluculated respective amount
 		} else if (storeItem.getName().equals("Oranges")) {
-			price = (storeItem.getQuantity() * 0.25);
+			price = (storeItem.getQuantity() * 0.25);/// Each item caluculated respective amount
 		}
 
-		
 		summaryDetails.put("Name", storeItem.getName());
 		summaryDetails.put("Quantity", String.valueOf(storeItem.getQuantity()));
 		summaryDetails.put("Price", String.valueOf(price));
@@ -60,7 +60,7 @@ public class StoreItemController extends AbstractRestHandler {
 
 	}
 
-//Step-2
+	// Step 2: Simple offer
 	@RequestMapping(value = "/offerDetails", method = RequestMethod.POST, consumes = { "application/json",
 			"application/xml" }, produces = { "application/json", "application/xml" })
 	@ResponseStatus(HttpStatus.OK)
@@ -74,20 +74,19 @@ public class StoreItemController extends AbstractRestHandler {
 			checkOutOffer = (storeItem.getQuantity() * 2);
 		} else if (storeItem.getName().equals("Oranges")) {
 			double price = (0.25 * 2);
-			checkOutOffer = (int) ((storeItem.getQuantity() / price) * 3);
+			checkOutOffer = (int) ((storeItem.getQuantity() / price) * 3);// give money take number of Oranges.
 
 		}
-		// StoreItem storeItemEntity = this.storeItemService.createItem(storeItem);
+
 		offerDetails.put("Name", storeItem.getName());
 		offerDetails.put("Quantity", String.valueOf(storeItem.getQuantity()));
 		offerDetails.put("offerItems", String.valueOf(checkOutOffer));
 		log.info("checkOutOffer Details==>" + offerDetails.toString());
 		return offerDetails;
-		
 
 	}
 
-//Step-3
+	// Step 3: Store and retrieve orders DB is Not up. may throw exceptions
 // Create	
 	@RequestMapping(value = "create", method = RequestMethod.POST, consumes = { "application/json",
 			"application/xml" }, produces = { "application/json", "application/xml" })
@@ -95,45 +94,35 @@ public class StoreItemController extends AbstractRestHandler {
 	@ResponseStatus(HttpStatus.CREATED)
 
 	@ApiOperation(value = "Create a indivisual  Store items.", notes = "")
-	public void createItem(@RequestBody StoreItem storeItem, HttpServletRequest request,
-			HttpServletResponse response) {
+	public void createItem(@RequestBody StoreItem storeItem, HttpServletRequest request, HttpServletResponse response) {
 		StoreItem storeItemEntity = this.storeItemService.createItem(storeItem);
 		response.setHeader("Location", request.getRequestURL().append("/").append(storeItemEntity.getId()).toString());
 	}
 
-	// Get All records..
-	@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
-
-	@ResponseStatus(HttpStatus.OK)
-
-	@ApiOperation(value = "All items stored in DB with pagination", notes = "You can provide a page number (default 0) and a page size (default 100)")
-	public
-
-	@ResponseBody Page<StoreItem> getAllStoreItems(@ApiParam(value = "The page number (zero-based)", required = true)
-
-	@RequestParam(value = "page", required = true, defaultValue = DEFAULT_PAGE_NUM) Integer page,
-
-			@ApiParam(value = "Tha page size", required = true)
-
-			@RequestParam(value = "size", required = true, defaultValue = DEFAULT_PAGE_SIZE) Integer size,
-			HttpServletRequest request, HttpServletResponse response) {
-		return this.storeItemService.getAllStoredItems(page, size);
-	}
+	
 
 	// Get By Id....
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
-
 	@ResponseStatus(HttpStatus.OK)
-
 	@ApiOperation(value = "Get a single item.", notes = "You have to provide a valid item ID.")
 	public
-
 	@ResponseBody StoreItem getItemById(@ApiParam(value = "The ID of the Item.", required = true)
-
 	@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StoreItem item = this.storeItemService.getItem(id);
 		// todo:
 		return item;
 	}
+	
+	// Get All records..Through pages
+		@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+		@ResponseStatus(HttpStatus.OK)
+		@ApiOperation(value = "get all items stored in DB with pagination", notes = "You can provide a page number (default 0) and a page size (default 100)")
+		public
+		@ResponseBody Page<StoreItem> getAllStoreItems(@ApiParam(value = "The page number (zero-based)", required = true)
+		@RequestParam(value = "page", required = true, defaultValue = DEFAULT_PAGE_NUM) Integer page,
+				@RequestParam(value = "size", required = true, defaultValue = DEFAULT_PAGE_SIZE) Integer size,
+				HttpServletRequest request, HttpServletResponse response) {
+			return this.storeItemService.getAllStoredItems(page, size);
+		}
 
 }

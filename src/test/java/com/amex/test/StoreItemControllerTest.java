@@ -144,7 +144,6 @@ public class StoreItemControllerTest {
 		StoreItem r2 = mockItem("Orange");
 		r2.setId(3);
 		byte[] r2Json = toJson(r2);
-
 		// RETRIEVE updated by Id
 		mvc.perform(get("/example/v1/storeItems/" + id).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.id", is((int) id))).andExpect(jsonPath("$.name", is(r2.getName())))
